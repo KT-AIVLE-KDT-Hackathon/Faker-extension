@@ -67,6 +67,7 @@ function Upload() {
           className="dropzone"
           style={{ cursor: "pointer" }}
         >
+          <h3>입력 이미지:</h3>
           <input {...getInputProps()} />
           {!selectedFile &&
             (isDragActive ? (
@@ -100,7 +101,7 @@ function Upload() {
       </div>
 
       {/* 처리된 이미지 미리보기 영역 */}
-      <div className="processed-preview">
+      <div className="uploader">
         <div className="dropzone">
           <h3>변환된 이미지:</h3>
           {processedImage ? (
@@ -113,7 +114,21 @@ function Upload() {
             <p>이미지가 아직 변환되지 않았습니다.</p>
           )}
         </div>
-        <button className="uploadButton">이미지 다운로드</button>
+        <button 
+          className="uploadButton"
+          onClick={() => {
+            if (processedImage) {
+              const link = document.createElement('a');
+              link.href = processedImage; // Blob URL 사용
+              link.download = 'processed_image.png'; // 다운로드될 파일 이름 지정
+              link.click();
+            } else {
+              alert('다운로드할 이미지가 없습니다.');
+            }
+          }}
+        >
+          이미지 다운로드
+        </button>
       </div>
     </div>
   );
